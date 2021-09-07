@@ -1,0 +1,24 @@
+version: "3"
+services: 
+
+  client:
+    build:
+      context: client
+    ports:
+      - 8080:8080
+    volumes: 
+      - ${PWD}/client/app:/app
+    environment: 
+      APP_PREDICTION_SERVICE: http://service:8081/image/predict
+    
+  service:
+    build:
+      context: service
+    ports:
+      - 8081:8081
+    volumes:
+      - ${PWD}/service/app:/app
+    command: /start-reload.sh
+    environment: 
+      PORT: 8081
+    
